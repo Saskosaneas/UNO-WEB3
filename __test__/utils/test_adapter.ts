@@ -1,17 +1,12 @@
+import { Card, Deck } from '../../src/model/deck'
 import { Randomizer, Shuffler, standardRandomizer, standardShuffler } from '../../src/utils/random_utils'
 
 // Fix (or import) these types:
-type Card = any
-type Deck = any
 type Round = any
 type Game = any
 
-//Fill out the empty functions
-export function createInitialDeck(): Deck {
-}
+export { createInitialDeck, createDeckFromMemento } from '../../src/model/deck'
 
-export function createDeckFromMemento(cards: Record<string, string | number>[]): Deck {
-}
 
 export type HandConfig = {
   players: string[]
@@ -21,11 +16,11 @@ export type HandConfig = {
 }
 
 export function createRound({
-    players, 
-    dealer, 
-    shuffler = standardShuffler,
-    cardsPerPlayer = 7
-  }: HandConfig): Round {
+  players,
+  dealer,
+  shuffler = standardShuffler,
+  cardsPerPlayer = 7
+}: HandConfig): Round {
 }
 
 export function createRoundFromMemento(memento: any, shuffler: Shuffler<Card> = standardShuffler): Round {
