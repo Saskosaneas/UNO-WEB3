@@ -2,4 +2,4 @@
 
 *Status: Upcoming / Pending Instructions*
 
-This directory will contain the documentation, requirements, and implementation summary for Assignment 5.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
