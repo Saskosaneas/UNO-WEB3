@@ -11,6 +11,9 @@ A comprehensive implementation of the classic **UNO** card game built for the **
 | **Assignment 1** | Object-Oriented Domain Model & Rules | Completed | **238 / 238 Passing** (100%) | [Assignment Prompt](./assignments/assignment-1/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-1/SUMMARY.md) |
 | **Assignment 2** | Backend API & Service Layer | ⏳ Pending | — | [Assignment 2](./assignments/assignment-2/README.md) |
 | **Assignment 3** | Frontend Web Application | ⏳ Pending | — | [Assignment 3](./assignments/assignment-3/README.md) |
+| **Assignment 4** | Advanced Features / Integration | ⏳ Pending | — | [Assignment 4](./assignments/assignment-4/README.md) |
+| **Assignment 5** | Persistence / Full-Stack Integration | ⏳ Pending | — | [Assignment 5](./assignments/assignment-5/README.md) |
+| **Assignment 6** | Deployment & Final Deliverable | ⏳ Pending | — | [Assignment 6](./assignments/assignment-6/README.md) |
 
 > [!NOTE]
 > The exact submission state of Assignment 1 is frozen and tagged in Git under tag [`assignment-1`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-1).
@@ -25,8 +28,11 @@ UNO-WEB3/
 │   ├── assignment-1/               # Assignment 1 prompt & comprehensive technical summary
 │   │   ├── ASSIGNMENT.md
 │   │   └── SUMMARY.md
-│   ├── assignment-2/               # Assignment 2 workspace (upcoming)
-│   └── assignment-3/               # Assignment 3 workspace (upcoming)
+│   ├── assignment-2/               # Assignment 2 workspace
+│   ├── assignment-3/               # Assignment 3 workspace
+│   ├── assignment-4/               # Assignment 4 workspace
+│   ├── assignment-5/               # Assignment 5 workspace
+│   └── assignment-6/               # Assignment 6 workspace
 ├── src/
 │   ├── model/                      # Assignment 1 Domain Engine
 │   │   ├── deck.ts                 # Card types, UnoDeck, initial 108-card deck & mementos
