@@ -126,17 +126,17 @@ export function createInitialDeck(): Deck {
 export function createDeckFromMemento(cards: Record<string, string | number>[]): Deck {
     const parsedCards: Card[] = []
     for (const raw of cards) {
-        // 1. Validate type using our types array!
+
         if (!raw.type || !types.includes(raw.type as any)) {
             throw new Error(`Invalid card type: ${raw.type}`)
         }
-        // 2. Validate NUMBERED cards
+
         if (raw.type === 'NUMBERED') {
             if (!raw.color || raw.number === undefined || typeof raw.number !== 'number') {
                 throw new Error('Numbered card must have color and number')
             }
         }
-        // 3. Validate Action cards
+
         if (raw.type === 'SKIP' || raw.type === 'REVERSE' || raw.type === 'DRAW') {
             if (!raw.color) {
                 throw new Error(`${raw.type} card must have color`)
