@@ -54,6 +54,7 @@ export interface Deck {
     shuffle(shuffler?: Shuffler<Card>): void
     filter(predicate: (card: Card) => boolean): Deck
     toMemento(): Record<string, string | number>[]
+    peek(): Card | undefined
 }
 
 export class UnoDeck implements Deck {
@@ -70,6 +71,11 @@ export class UnoDeck implements Deck {
     deal(): Card | undefined {
         return this.cards.shift()
     }
+
+    peek(): Card | undefined {
+        return this.cards[0]
+    }
+
 
     shuffle(shuffler: Shuffler<Card> = standardShuffler): void {
         shuffler(this.cards)
