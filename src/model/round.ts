@@ -1,11 +1,13 @@
 import { Shuffler, standardShuffler } from "../utils/random_utils";
 import { Card, Color, Deck, UnoDeck, createInitialDeck, createDeckFromMemento, colors } from "./deck";
 
+export type Hand = Card[]
+
 export interface Round {
     readonly playerCount: number
     player(index: number): string
     readonly dealer: number
-    playerHand(index: number): Card[]
+    playerHand(index: number): Hand
     playerInTurn(): number | undefined
     discardPile(): { size: number; top(): Card | undefined }
     drawPile(): Deck
