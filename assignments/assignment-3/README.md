@@ -1,5 +1,8 @@
-# WEB3 Assignment 3: Frontend Web Application
+# WEB3 Assignment 3: Multiplayer Uno (Client & Server)
 
-*Status: Upcoming / Pending Instructions*
+*Status: Upcoming*
 
-This directory will contain the documentation, requirements, and implementation summary for Assignment 3.
+## Overview
+Develop a networked Uno game allowing play against human opponents through an **Apollo GraphQL Server** with a **Vue.js** frontend.
+
+- [Official Assignment Prompt](./ASSIGNMENT.md)

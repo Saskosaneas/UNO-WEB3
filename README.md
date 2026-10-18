@@ -9,11 +9,11 @@ A comprehensive implementation of the classic **UNO** card game built for the **
 | Milestone | Deliverable | Status | Tests | Documentation |
 | :--- | :--- | :---: | :---: | :--- |
 | **Assignment 1** | Object-Oriented Domain Model & Rules | Completed | **238 / 238 Passing** (100%) | [Assignment Prompt](./assignments/assignment-1/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-1/SUMMARY.md) |
-| **Assignment 2** | Backend API & Service Layer | ⏳ Pending | — | [Assignment 2](./assignments/assignment-2/README.md) |
-| **Assignment 3** | Frontend Web Application | ⏳ Pending | — | [Assignment 3](./assignments/assignment-3/README.md) |
-| **Assignment 4** | Advanced Features / Integration | ⏳ Pending | — | [Assignment 4](./assignments/assignment-4/README.md) |
-| **Assignment 5** | Persistence / Full-Stack Integration | ⏳ Pending | — | [Assignment 5](./assignments/assignment-5/README.md) |
-| **Assignment 6** | Deployment & Final Deliverable | ⏳ Pending | — | [Assignment 6](./assignments/assignment-6/README.md) |
+| **Assignment 2** | Browser-Only Uno Against Bots (Vue.js & Web Workers) | ⏳ Pending | — | [Assignment Prompt](./assignments/assignment-2/ASSIGNMENT.md) • [Overview](./assignments/assignment-2/README.md) |
+| **Assignment 3** | Multiplayer Uno (Vue.js Client & Apollo GraphQL Server) | ⏳ Pending | — | [Assignment Prompt](./assignments/assignment-3/ASSIGNMENT.md) • [Overview](./assignments/assignment-3/README.md) |
+| **Assignment 4** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-4/README.md) |
+| **Assignment 5** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-5/README.md) |
+| **Assignment 6** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-6/README.md) |
 
 > [!NOTE]
 > The exact submission state of Assignment 1 is frozen and tagged in Git under tag [`assignment-1`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-1).

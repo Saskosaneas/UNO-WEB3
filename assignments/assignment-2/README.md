@@ -1,5 +1,8 @@
-# WEB3 Assignment 2: Backend API & Service Layer
+# WEB3 Assignment 2: Browser-Only Uno Against Bots
 
-*Status: Upcoming / Pending Instructions*
+*Status: In Progress / Upcoming*
 
-This directory will contain the documentation, requirements, and implementation summary for Assignment 2.
+## Overview
+Develop a browser-based Uno game using **Vue.js** played against 1–3 bots implemented as **Web Workers** communicating via `postMessage` and `onmessage`.
+
+- [Official Assignment Prompt](./ASSIGNMENT.md)
