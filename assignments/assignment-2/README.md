@@ -5,4 +5,6 @@
 ## Overview
 Develop a browser-based Uno game using **Vue.js** played against 1–3 bots implemented as **Web Workers** communicating via `postMessage` and `onmessage`.
 
+UI components will integrate card designs, icons, and audio assets located in [`future assets/`](../../future%20assets/).
+
 - [Official Assignment Prompt](./ASSIGNMENT.md)

@@ -28,11 +28,12 @@ UNO-WEB3/
 │   ├── assignment-1/               # Assignment 1 prompt & comprehensive technical summary
 │   │   ├── ASSIGNMENT.md
 │   │   └── SUMMARY.md
-│   ├── assignment-2/               # Assignment 2 workspace
-│   ├── assignment-3/               # Assignment 3 workspace
+│   ├── assignment-2/               # Assignment 2 workspace (Vue.js + Web Workers)
+│   ├── assignment-3/               # Assignment 3 workspace (Multiplayer + GraphQL)
 │   ├── assignment-4/               # Assignment 4 workspace
 │   ├── assignment-5/               # Assignment 5 workspace
 │   └── assignment-6/               # Assignment 6 workspace
+├── future assets/                  # UI assets repository (SVGs, card designs, sounds, icons)
 ├── src/
 │   ├── model/                      # Assignment 1 Domain Engine
 │   │   ├── deck.ts                 # Card types, UnoDeck, initial 108-card deck & mementos
@@ -47,6 +48,9 @@ UNO-WEB3/
 ├── package.json
 └── tsconfig.json
 ```
+
+> [!TIP]
+> **UI Assets**: Graphic assets, card face SVGs, audio effects, and UI components placed in [`future assets/`](./future%20assets/) will be directly integrated into the Vue.js interface for Assignment 2 & 3.
 
 ---
 
