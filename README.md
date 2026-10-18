@@ -1,69 +1,89 @@
 # UNO-WEB3
 
-A decentralized, on-chain implementation of the classic **UNO** card game built for a Web3 course assignment.
+A comprehensive implementation of the classic **UNO** card game built for the **WEB3** university course.
 
 ---
 
-## Project Overview
+## Progress Dashboard
 
-**UNO-WEB3** brings the beloved family card game onto the blockchain. The project explores implementing UNO game logic, smart contract architecture, verifiable state transitions, and a Web3 dApp interface.
+| Milestone | Deliverable | Status | Tests | Documentation |
+| :--- | :--- | :---: | :---: | :--- |
+| **Assignment 1** | Object-Oriented Domain Model & Rules | Completed | **238 / 238 Passing** (100%) | [Assignment Prompt](./assignments/assignment-1/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-1/SUMMARY.md) |
+| **Assignment 2** | Backend API & Service Layer | ⏳ Pending | — | [Assignment 2](./assignments/assignment-2/README.md) |
+| **Assignment 3** | Frontend Web Application | ⏳ Pending | — | [Assignment 3](./assignments/assignment-3/README.md) |
 
-* **Fair & Verifiable Play:** Transparent rules and verifiable mechanics without reliance on a centralized server.
-* **Trustless State Enforcement:** Smart contracts validate player moves, handle special card effects (Skip, Reverse, Draw 2, Wild, Wild Draw 4), track scores, and enforce game completion.
-* **Transparent Game History:** Game events emitted on-chain for auditing and history tracking.
-
----
-
-## Game Rules Reference
-
-The core logic adheres to the official UNO rules detailed in [`uno_rules.md`](./uno_rules.md):
-
-* **Deck Composition:** 112 Cards (76 Numbered 0–9 across 4 colors, 24 Action Cards [Skip, Reverse, Draw 2], 8 Wild Cards [Wild, Wild Draw 4], and customizable blank cards).
-* **Hand Size & Setup:** Each player starts with 7 cards; 1 starter card initiates the discard pile.
-* **Turn Flow:** Play matching color, number, or symbol. Draw from pile if no legal play is held or if choosing to renege.
-* **Special Actions:**
-  * **Skip:** Bypasses next player's turn.
-  * **Reverse:** Switches play direction (acts as Skip in 2-player games).
-  * **Draw 2 / Wild Draw 4:** Forces victim to draw cards and forfeit their turn.
-  * **Wild Draw 4 Challenge:** Mechanics for calling out illegal Wild Draw 4 plays.
-  * **UNO Call:** Penalties for failing to declare "UNO!" with 1 card remaining.
-* **Scoring & End Condition:** First player to empty their hand wins the round, tallying points based on opponent cards held (first to 500 points wins match, or elimination variation).
+> [!NOTE]
+> The exact submission state of Assignment 1 is frozen and tagged in Git under tag [`assignment-1`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-1).
 
 ---
 
-## Repository Structure
+## Project Structure
 
 ```text
 UNO-WEB3/
-├── Assignments Documentation/    # Course deliverables, assignment prompts & reports
-├── uno_rules.md                 # Complete official UNO rules & reference guide
-├── contracts/                   # Smart contracts
-├── test/                        # Contract tests & simulation suites
-├── frontend/                    # Web3 dApp interface
-└── README.md                    # Project documentation
+├── assignments/
+│   ├── assignment-1/               # Assignment 1 prompt & comprehensive technical summary
+│   │   ├── ASSIGNMENT.md
+│   │   └── SUMMARY.md
+│   ├── assignment-2/               # Assignment 2 workspace (upcoming)
+│   └── assignment-3/               # Assignment 3 workspace (upcoming)
+├── src/
+│   ├── model/                      # Assignment 1 Domain Engine
+│   │   ├── deck.ts                 # Card types, UnoDeck, initial 108-card deck & mementos
+│   │   ├── round.ts                # UnoRound, legal plays, action resolution, UNO shout rules
+│   │   └── uno.ts                  # UnoGame multi-round progression, 500-pt scoring
+│   └── utils/
+│       └── random_utils.ts         # Randomizer & Fisher-Yates Shuffler interfaces
+├── __test__/                       # BDD Test Suite (Jest)
+│   ├── model/                      # 8 test suites (deck, round, uno, mementos)
+│   └── utils/                      # Test adapters and deterministic shuffle builders
+├── uno_rules.md                    # Official UNO rules reference
+├── package.json
+└── tsconfig.json
 ```
 
 ---
 
-## Roadmap & Milestones
+## Getting Started
 
-- [x] Repository initialization and UNO rules consolidation.
-- [ ] Assignment requirements review and workspace environment setup.
-- [ ] Smart contract architecture design (Deck representation, game state, turn mechanics).
-- [ ] Core contract implementation (Deal, Play, Draw, Action resolution, Win conditions).
-- [ ] Automated contract testing suite (unit tests, edge cases).
-- [ ] Frontend dApp & Web3 wallet connection.
-- [ ] Local testnet / Testnet deployment and verification.
-- [ ] Final assignment documentation and demonstration submission.
+### Installation
+```bash
+npm install
+```
+
+### Running the Test Suite
+Run all 238 unit tests across the 8 test suites:
+```bash
+npm test
+```
+
+Run specific test suites:
+```bash
+# Test the Deck system
+npx jest __test__/model/deck.test.ts
+
+# Test Round setup & legal plays
+npx jest __test__/model/round.start.test.ts __test__/model/round.legal.plays.test.ts
+
+# Test Turn flow & "UNO!" shout penalty mechanics
+npx jest __test__/model/round.playing.test.ts __test__/model/round.going.out.test.ts
+
+# Test Memento state serialization
+npx jest __test__/model/round.memento.test.ts __test__/model/uno.memento.test.ts
+
+# Test Full Multi-round Game
+npx jest __test__/model/uno.test.ts
+```
+
+### Type Checking
+```bash
+npx tsc --noEmit
+```
 
 ---
 
-## Contributors
-
-* Web3 Course Student & Developer Team
-
----
-
-## License
-
-This project is created for educational purposes as part of a Web3 curriculum.
+## Assignment 1 Highlights
+- **Strictly Typed:** Discriminated unions for Cards (`NumberedCard`, `ColouredCard`, `WildCard`, `WildDrawCard`).
+- **Complete Ruleset:** Standard UNO rules plus official 2-player special rules (`Reverse` as `Skip`, `Draw 2` giving another turn).
+- **"UNO!" Declaration Window:** Accurate timing window and 4-card draw penalty for uncalled penultimate plays.
+- **State Preservation:** Full Memento pattern for saving and restoring `Deck`, `Round`, and `Game` state to/from JSON.
