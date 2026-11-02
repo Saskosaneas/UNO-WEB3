@@ -9,7 +9,7 @@ A comprehensive implementation of the classic **UNO** card game built for the **
 | Milestone | Deliverable | Status | Tests | Documentation |
 | :--- | :--- | :---: | :---: | :--- |
 | **Assignment 1** | Object-Oriented Domain Model & Rules | Completed | **238 / 238 Passing** (100%) | [Assignment Prompt](./assignments/assignment-1/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-1/SUMMARY.md) |
-| **Assignment 2** | Browser-Only Uno Against Bots (Vue.js & Web Workers) | Completed (UI Assets Optional) | **238 / 238 Passing** + Vite Build | [Assignment Prompt](./assignments/assignment-2/ASSIGNMENT.md) • [Overview](./assignments/assignment-2/README.md) |
+| **Assignment 2** | Browser-Only Uno Against Bots (Vue.js & Web Workers) | 🔄 In Progress (Awaiting Assets) | **238 / 238 Passing** + Vite Build | [Assignment Prompt](./assignments/assignment-2/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-2/SUMMARY.md) • [Overview](./assignments/assignment-2/README.md) |
 | **Assignment 3** | Multiplayer Uno (Vue.js Client & Apollo GraphQL Server) | ⏳ Pending | — | [Assignment Prompt](./assignments/assignment-3/ASSIGNMENT.md) • [Overview](./assignments/assignment-3/README.md) |
 | **Assignment 4** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-4/README.md) |
 | **Assignment 5** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-5/README.md) |
@@ -28,9 +28,10 @@ UNO-WEB3/
 │   ├── assignment-1/               # Assignment 1 prompt & comprehensive technical summary
 │   │   ├── ASSIGNMENT.md
 │   │   └── SUMMARY.md
-│   ├── assignment-2/               # Assignment 2 prompt & implementation overview
+│   ├── assignment-2/               # Assignment 2 prompt, technical summary & overview
 │   │   ├── ASSIGNMENT.md
-│   │   └── README.md
+│   │   ├── README.md
+│   │   └── SUMMARY.md
 │   ├── assignment-3/               # Assignment 3 workspace (Multiplayer + GraphQL)
 │   ├── assignment-4/               # Assignment 4 workspace
 │   ├── assignment-5/               # Assignment 5 workspace
