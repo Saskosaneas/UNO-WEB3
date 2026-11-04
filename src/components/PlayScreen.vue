@@ -7,7 +7,7 @@
         <template v-if="gameMode === 'match'">Round {{ roundNumber }} · first to {{ targetScore }}</template>
         <template v-else>Single round</template>
       </span>
-      <button class="btn btn-quiet" type="button" @click="resetToLobby">Quit</button>
+      <button class="btn btn-quiet quit" type="button" @click="resetToLobby">Quit</button>
     </header>
 
     <div class="layout">
@@ -64,22 +64,12 @@
           </div>
         </section>
 
-        <section class="actions">
-          <p class="status" aria-live="polite">{{ statusText }}</p>
-          <div class="action-buttons">
-            <button class="btn btn-uno" type="button" :disabled="!canSayUno" @click="humanSayUno">UNO!</button>
-            <button v-if="canCatchUno" class="btn btn-catch" type="button" @click="humanCatchUno">
-              Catch {{ vulnerableName }}
-            </button>
-          </div>
-        </section>
+        <p class="status" aria-live="polite">{{ statusText }}</p>
 
         <section class="hand-area" :class="{ 'in-turn': isHumanTurn }" aria-label="Your hand">
-          <div class="hand-title">
-            <div class="player-name">
-              <img v-if="playerAvatar" class="avatar" :src="playerAvatar" alt="" />
-              <strong>{{ human?.name }}</strong>
-            </div>
+          <div class="player-badge">
+            <img v-if="playerAvatar" class="player-avatar" :src="playerAvatar" alt="" />
+            <strong class="player-name">{{ human?.name }}</strong>
             <span class="hand-count">
               {{ humanHand.length }} {{ humanHand.length === 1 ? 'card' : 'cards' }}
               <template v-if="gameMode === 'match'"> · {{ human?.score }} pts</template>
@@ -94,6 +84,12 @@
               :playable="playableCardIndices.has(index)"
               @click="humanPlayCard(index)"
             />
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-uno" type="button" :disabled="!canSayUno" @click="humanSayUno">UNO!</button>
+            <button v-if="canCatchUno" class="btn btn-catch" type="button" @click="humanCatchUno">
+              Catch {{ vulnerableName }}
+            </button>
           </div>
         </section>
       </div>
@@ -213,35 +209,60 @@ const statusText = computed(() => {
 }
 
 .topbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
-  margin: 0.75rem 1rem 0;
-  padding: 0.4rem 0.6rem 0.4rem 1rem;
-  border-radius: 999px;
-  background: var(--glass);
-  backdrop-filter: blur(6px);
-  box-shadow: var(--chunky);
+  padding: 0.75rem 1.25rem 0;
+}
+
+.brand,
+.brand-image {
+  justify-self: start;
 }
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   font-weight: 800;
-  color: var(--red);
-  -webkit-text-stroke: 1px var(--text);
+  color: var(--yellow);
+  -webkit-text-stroke: 1.5px var(--text);
+  rotate: -6deg;
 }
 
 .brand-image {
-  height: 2.6rem;
-  margin: -0.5rem 0;
-  filter: drop-shadow(0 0.15rem 0.2rem rgba(0, 0, 0, 0.3));
+  height: 4.5rem;
+  rotate: -6deg;
+  filter: drop-shadow(0 0.3rem 0.4rem rgba(0, 0, 0, 0.45));
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .brand-image:hover {
-  transform: rotate(-8deg) scale(1.1);
+  transform: rotate(-6deg) scale(1.1);
+}
+
+.quit {
+  justify-self: end;
+  padding: 0.5rem 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, color 0.2s;
+}
+
+.quit:hover:not(:disabled) {
+  opacity: 1;
+  background: #fee2e2;
+  color: #b91c1c;
+  transform: translateY(-0.1rem);
+}
+
+.quit:active {
+  transform: translateY(0.2rem);
+  box-shadow: none;
 }
 
 .avatar {
@@ -254,22 +275,15 @@ const statusText = computed(() => {
   box-shadow: 0 0 0 0.15rem var(--yellow);
 }
 
-.player-name {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-}
-
 .round-label {
-  padding: 0.25rem 0.8rem;
+  padding: 0.45rem 1.4rem;
   border-radius: 999px;
-  background: #fff7d6;
-  color: var(--muted);
+  background: #fff;
+  color: var(--text);
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.25), 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .layout {
@@ -496,16 +510,10 @@ const statusText = computed(() => {
   color: var(--muted);
 }
 
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-}
-
 .status {
   position: relative;
+  align-self: flex-start;
+  margin-left: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
   background: var(--glass);
@@ -514,11 +522,11 @@ const statusText = computed(() => {
   box-shadow: var(--chunky);
 }
 
-/* little speech-bubble tail pointing at the hand */
+/* little speech-bubble tail pointing at the player's avatar */
 .status::after {
   content: '';
   position: absolute;
-  left: 1.5rem;
+  left: 3.5rem;
   bottom: -0.45rem;
   border: 0.5rem solid transparent;
   border-bottom: 0;
@@ -526,8 +534,11 @@ const statusText = computed(() => {
 }
 
 .action-buttons {
+  grid-area: actions;
   display: flex;
-  gap: 0.6rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .btn-uno,
@@ -572,7 +583,12 @@ const statusText = computed(() => {
 }
 
 .hand-area {
-  padding: 0.7rem 1rem 1rem;
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr) 9rem;
+  grid-template-areas: 'badge hand actions';
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   border: 0.2rem solid transparent;
   border-radius: 1.5rem;
   background: var(--glass);
@@ -586,13 +602,37 @@ const statusText = computed(() => {
   box-shadow: 0 0 0 0.35rem rgba(253, 224, 71, 0.35), var(--chunky);
 }
 
-.hand-title {
+.player-badge {
+  grid-area: badge;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
+  gap: 0.4rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.player-avatar {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff7d6;
+  border: 0.25rem solid #fff;
+  box-shadow: 0 0 0 0.25rem var(--yellow), 0 0.4rem 0.8rem rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.2s;
+}
+
+.hand-area.in-turn .player-avatar {
+  animation: bob 0.9s ease-in-out infinite;
+  box-shadow: 0 0 0 0.25rem var(--glow), 0 0 1.2rem 0.4rem rgba(253, 224, 71, 0.75);
+}
+
+.player-name {
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  overflow-wrap: anywhere;
 }
 
 .hand-count {
@@ -604,10 +644,12 @@ const statusText = computed(() => {
 }
 
 .hand {
+  grid-area: hand;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.9rem 0.4rem;
+  padding-top: 0.6rem;
 }
 
 .log {
@@ -665,7 +707,7 @@ const statusText = computed(() => {
 .toast {
   position: fixed;
   z-index: 10;
-  top: 4.5rem;
+  top: 6rem;
   left: 50%;
   width: max-content;
   max-width: calc(100vw - 2rem);
@@ -790,7 +832,41 @@ const statusText = computed(() => {
 
 @media (max-width: 640px) {
   .topbar {
-    margin: 0.5rem 0.6rem 0;
+    padding: 0.5rem 0.75rem 0;
+  }
+
+  .brand-image {
+    height: 3rem;
+  }
+
+  .round-label {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .hand-area {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'badge actions' 'hand hand';
+    padding: 0.75rem;
+  }
+
+  .player-badge {
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: left;
+  }
+
+  .player-avatar {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .status {
+    margin-left: 0;
+  }
+
+  .status::after {
+    left: 1.5rem;
   }
 
   .layout {
