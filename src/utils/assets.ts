@@ -1,7 +1,7 @@
 import type { Card } from '@/model/deck';
 
-// Every image in "future assets/", see the README there for the expected names
-const files = import.meta.glob('/future assets/**/*.{jpg,jpeg,png}', {
+// Every image in "assets/cards" and "assets/ui", named as cardAssetName() and the components expect
+const files = import.meta.glob('/assets/{cards,ui}/*.{jpg,jpeg,png}', {
   eager: true,
   query: '?url',
   import: 'default'
@@ -9,7 +9,7 @@ const files = import.meta.glob('/future assets/**/*.{jpg,jpeg,png}', {
 
 const urls = new Map(
   Object.entries(files).map(([path, url]) => [
-    path.replace('/future assets/', '').replace(/\.\w+$/, '').toLowerCase(),
+    path.replace('/assets/', '').replace(/\.\w+$/, '').toLowerCase(),
     url
   ])
 );

@@ -9,14 +9,14 @@ A comprehensive implementation of the classic **UNO** card game built for the **
 | Milestone | Deliverable | Status | Tests | Documentation |
 | :--- | :--- | :---: | :---: | :--- |
 | **Assignment 1** | Object-Oriented Domain Model & Rules | Completed | **238 / 238 Passing** (100%) | [Assignment Prompt](./assignments/assignment-1/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-1/SUMMARY.md) |
-| **Assignment 2** | Browser-Only Uno Against Bots (Vue.js & Web Workers) | 🔄 In Progress (Awaiting Assets) | **238 / 238 Passing** + Vite Build | [Assignment Prompt](./assignments/assignment-2/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-2/SUMMARY.md) • [Overview](./assignments/assignment-2/README.md) |
+| **Assignment 2** | Browser-Only Uno Against Bots (Vue.js & Web Workers) | Completed | **238 / 238 Passing** + Vite Build | [Assignment Prompt](./assignments/assignment-2/ASSIGNMENT.md) • [Implementation Summary](./assignments/assignment-2/SUMMARY.md) • [Overview](./assignments/assignment-2/README.md) |
 | **Assignment 3** | Multiplayer Uno (Vue.js Client & Apollo GraphQL Server) | ⏳ Pending | — | [Assignment Prompt](./assignments/assignment-3/ASSIGNMENT.md) • [Overview](./assignments/assignment-3/README.md) |
 | **Assignment 4** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-4/README.md) |
 | **Assignment 5** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-5/README.md) |
 | **Assignment 6** | TBD (Upcoming) | ⏳ Pending | — | [Overview](./assignments/assignment-6/README.md) |
 
 > [!NOTE]
-> The exact submission state of Assignment 1 is frozen and tagged in Git under tag [`assignment-1`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-1).
+> The exact submission states are frozen and tagged in Git: Assignment 1 under tag [`assignment-1`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-1) and Assignment 2 under tag [`assignment-2`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-2).
 
 ---
 
@@ -36,10 +36,9 @@ UNO-WEB3/
 │   ├── assignment-4/               # Assignment 4 workspace
 │   ├── assignment-5/               # Assignment 5 workspace
 │   └── assignment-6/               # Assignment 6 workspace
-├── future assets/                  # Drop-in UI & card image assets (auto-loaded via Vite)
+├── assets/                  # Drop-in UI & card image assets (auto-loaded via Vite)
 │   ├── cards/                      # 55 card images (red-0..yellow-draw2, wild, wild-draw4, back)
-│   ├── ui/                         # 8 UI images (table, logo, avatars, color tokens)
-│   └── README.md                   # Exact asset naming specification
+│   └── ui/                         # 8 UI images (table, logo, avatars, color tokens)
 ├── src/
 │   ├── components/                 # Assignment 2 Vue 3 UI Components
 │   │   ├── SetupScreen.vue         # Game setup (player name, 1–3 bots, single round / 500-pt match)
@@ -57,7 +56,7 @@ UNO-WEB3/
 │   │   ├── round.ts                # UnoRound, legal plays, action resolution, UNO shout rules
 │   │   └── uno.ts                  # UnoGame multi-round progression, 500-pt scoring
 │   ├── utils/
-│   │   ├── assets.ts               # Dynamic asset loader for "future assets/" with fallback support
+│   │   ├── assets.ts               # Dynamic asset loader for "assets/" with fallback support
 │   │   └── random_utils.ts         # Randomizer & Fisher-Yates Shuffler interfaces
 │   ├── App.vue                     # Root component & screen router
 │   ├── main.ts                     # Vue application entry point
@@ -73,7 +72,7 @@ UNO-WEB3/
 ```
 
 > [!TIP]
-> **UI Assets**: Image assets placed in [`future assets/`](./future%20assets/) following the naming guide in [`future assets/README.md`](./future%20assets/README.md) are automatically discovered and displayed by the game, falling back cleanly to text/CSS when omitted.
+> **UI Assets**: Images in [`assets/cards/`](./assets/cards/) and [`assets/ui/`](./assets/ui/) are automatically discovered and displayed by the game, falling back cleanly to text/CSS when omitted. To swap one, replace the file and keep its name (see [`src/utils/assets.ts`](./src/utils/assets.ts) for how names are resolved).
 
 ---
 
@@ -134,10 +133,17 @@ npx tsc --noEmit
 - **Isolated Web Worker Bots:** 1–3 bot opponents run in separate background threads ([`worker.ts`](./src/workers/worker.ts)), communicating strictly via typed `postMessage` and `onmessage` payloads ([`worker_message.ts`](./src/types/worker_message.ts)).
 - **Human-like Bot Behavior:** Bots play legally according to Assignment 1 rules, choose optimal Wild colors based on their hand, occasionally forget to shout "UNO!", and probabilistically catch other players who forget to shout "UNO!".
 - **Single Round & Full Match Support:** Supports both single-round games and full 500-point multi-round matches with a between-rounds scoreboard and end-of-game celebration.
-- **Zero-Config Asset Loader:** Automatically loads `.png`, `.jpg`, or `.jpeg` card and UI graphics from [`future assets/`](./future%20assets/) while providing accessible text fallbacks for any missing files.
+- **Zero-Config Asset Loader:** Automatically loads `.png`, `.jpg`, or `.jpeg` card and UI graphics from [`assets/`](./assets/) while providing accessible text fallbacks for any missing files.
 
 ### Assignment 1 Highlights (Domain Model)
 - **Strictly Typed:** Discriminated unions for Cards (`NumberedCard`, `ColouredCard`, `WildCard`, `WildDrawCard`).
 - **Complete Ruleset:** Standard UNO rules plus official 2-player special rules (`Reverse` as `Skip`, `Draw 2` giving another turn).
 - **"UNO!" Declaration Window:** Accurate timing window and 4-card draw penalty for uncalled penultimate plays.
 - **State Preservation:** Full Memento pattern for saving and restoring `Deck`, `Round`, and `Game` state to/from JSON.
+
+---
+
+## Credits
+
+- **Card art & table background:** [Uno - Card Game Asset Pack](https://alexder.itch.io/uno-card-game-asset-pack) by **[AlexDer](https://alexder.itch.io/)** on itch.io. Thank you for making it free!
+- **AI assistance:** AI tools were used to help write the CSS styling and to create the color token images (`assets/ui/color-*.png`).

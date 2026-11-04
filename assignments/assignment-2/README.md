@@ -1,13 +1,12 @@
 # WEB3 Assignment 2: Browser-Only Uno Against Bots
 
-*Status: 🔄 In Progress (Functional code complete — awaiting image assets in `future assets/`)*
+*Status: ✅ Completed (frozen under Git tag [`assignment-2`](https://github.com/Saskosaneas/UNO-WEB3/releases/tag/assignment-2))*
 
 ## Overview
 A browser-based **UNO** game built with **Vue.js 3**, **TypeScript**, and **Vite**, played against 1–3 bots implemented as isolated **Web Workers** communicating exclusively via `postMessage` and `onmessage`.
 
 - [Official Assignment Prompt](./ASSIGNMENT.md)
 - [Implementation Summary & Architecture](./SUMMARY.md)
-- [Asset Naming & Drop-In Guide](../../future%20assets/README.md)
 
 ---
 
@@ -35,12 +34,12 @@ A browser-based **UNO** game built with **Vue.js 3**, **TypeScript**, and **Vite
 - **[`SetupScreen.vue`](../../src/components/SetupScreen.vue):** Choose player name, number of bot opponents (1–3), and game mode (*Single round* or *First to 500 points*).
 - **[`PlayScreen.vue`](../../src/components/PlayScreen.vue):** Interactive game table featuring opponent seats, draw/discard piles, active color indicator, Wild color picker dialog, interactive player hand, "Say UNO!" and "Catch UNO!" actions, and a live event log.
 - **[`ResultScreen.vue`](../../src/components/ResultScreen.vue):** Displays between-rounds standings and the final game-over screen with confetti celebration.
-- **[`UnoCard.vue`](../../src/components/UnoCard.vue) & [`src/utils/assets.ts`](../../src/utils/assets.ts):** Automatically loads card and UI images from [`future assets/`](../../future%20assets/) and falls back to clean text/CSS cards when images are not yet present.
+- **[`UnoCard.vue`](../../src/components/UnoCard.vue) & [`src/utils/assets.ts`](../../src/utils/assets.ts):** Automatically loads card and UI images from [`assets/`](../../assets/) and falls back to clean text/CSS cards when images are not yet present.
 
 ---
 
-## Remaining Before Hand-in
-- [ ] Add the 55 card images (`future assets/cards/`) and 8 UI images (`future assets/ui/`).
+## Assets
+- [x] 55 card images in [`assets/cards/`](../../assets/cards/) and 8 UI images in [`assets/ui/`](../../assets/ui/). Card art and table by [AlexDer](https://alexder.itch.io/uno-card-game-asset-pack) (see the Credits section of the [main README](../../README.md)).
 
 ---
 

@@ -55,8 +55,17 @@ const image = computed(() => assetUrl(props.card ? cardAssetName(props.card) : '
   object-fit: cover;
 }
 
+/* The art has a transparent margin, so drop the box and let the card shape cast its own shadow */
 .uno-card:has(img) {
   padding: 0;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+.uno-card:has(img) img {
+  transform: scale(1.11);
+  filter: drop-shadow(0 0.15rem 0.2rem rgba(0, 0, 0, 0.35));
 }
 
 .small {
@@ -66,19 +75,28 @@ const image = computed(() => assetUrl(props.card ? cardAssetName(props.card) : '
 
 button.uno-card {
   cursor: not-allowed;
-  opacity: 0.45;
+  opacity: 0.5;
+  filter: saturate(0.6);
 }
 
 button.uno-card.playable {
   cursor: pointer;
   opacity: 1;
-  outline: 0.15rem solid var(--text);
+  filter: none;
   transform: translateY(-0.5rem);
-  transition: transform 0.14s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button.uno-card.playable:not(:has(img)) {
+  outline: 0.15rem solid var(--text);
+}
+
+button.uno-card.playable img {
+  filter: drop-shadow(0 0 0.3rem #fde047) drop-shadow(0 0.25rem 0.25rem rgba(0, 0, 0, 0.35));
 }
 
 button.uno-card.playable:hover {
-  transform: translateY(-1rem);
+  transform: translateY(-1.1rem) rotate(-4deg) scale(1.06);
 }
 
 button.uno-card:focus-visible {

@@ -56,7 +56,7 @@
           </div>
 
           <div class="state">
-            <span v-if="activeColor" class="active-color">
+            <span v-if="activeColor" class="active-color" :class="activeColor.toLowerCase()">
               <img v-if="tokenUrl(activeColor)" :src="tokenUrl(activeColor)" alt="" />
               {{ activeColor }}
             </span>
@@ -118,6 +118,7 @@
             v-for="color in colors"
             :key="color"
             class="swatch"
+            :class="color.toLowerCase()"
             type="button"
             @click="humanPlayCard(pendingWildIndex!, color)"
           >
@@ -199,6 +200,13 @@ const statusText = computed(() => {
 
 <style scoped>
 .play {
+  --red: #ef4444;
+  --yellow: #facc15;
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --glass: rgba(255, 255, 255, 0.88);
+  --glow: #fde047;
+  --chunky: 0 0.3rem 0 rgba(0, 0, 0, 0.18), 0 0.6rem 1.4rem rgba(0, 0, 0, 0.18);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -209,38 +217,59 @@ const statusText = computed(() => {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.5rem 1rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  margin: 0.75rem 1rem 0;
+  padding: 0.4rem 0.6rem 0.4rem 1rem;
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--chunky);
 }
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--red);
+  -webkit-text-stroke: 1px var(--text);
 }
 
 .brand-image {
-  height: 2rem;
+  height: 2.6rem;
+  margin: -0.5rem 0;
+  filter: drop-shadow(0 0.15rem 0.2rem rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.brand-image:hover {
+  transform: rotate(-8deg) scale(1.1);
 }
 
 .avatar {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 50%;
   object-fit: cover;
+  background: #fff7d6;
+  border: 0.15rem solid #fff;
+  box-shadow: 0 0 0 0.15rem var(--yellow);
 }
 
 .player-name {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
 }
 
 .round-label {
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: #fff7d6;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .layout {
@@ -262,28 +291,42 @@ const statusText = computed(() => {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.9rem;
 }
 
 .opponent {
   flex: 1 1 10rem;
   max-width: 15rem;
-  padding: 0.6rem 0.75rem;
-  border: 0.15rem solid var(--border);
-  border-radius: 0.75rem;
-  background: var(--surface);
+  padding: 0.6rem 0.8rem;
+  border: 0.2rem solid transparent;
+  border-radius: 1.25rem;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--chunky);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
 }
 
-.opponent.in-turn,
-.hand-area.in-turn {
-  border-color: var(--text);
+.opponent.in-turn {
+  border-color: var(--glow);
+  transform: translateY(-0.2rem) scale(1.03);
+  box-shadow: 0 0 0 0.3rem rgba(253, 224, 71, 0.35), var(--chunky);
+}
+
+.opponent.in-turn .avatar {
+  animation: bob 0.9s ease-in-out infinite;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-0.2rem) rotate(-6deg);
+  }
 }
 
 .opponent-name {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
+  gap: 0.5rem;
+  font-family: var(--font-display);
 }
 
 .points {
@@ -296,15 +339,28 @@ const statusText = computed(() => {
   color: var(--muted);
 }
 
+.card-count {
+  font-family: var(--font-display);
+}
+
 .fan {
   display: flex;
   height: 3.1rem;
-  margin: 0.4rem 0 0.25rem;
+  margin: 0.5rem 0 0.6rem 0.25rem;
   padding-right: 1.1rem;
 }
 
 .fan > * {
   margin-right: -1.1rem;
+  transform-origin: bottom center;
+}
+
+.fan > :nth-child(odd) {
+  transform: rotate(-6deg);
+}
+
+.fan > :nth-child(even) {
+  transform: rotate(5deg) translateY(0.1rem);
 }
 
 .center {
@@ -314,22 +370,26 @@ const statusText = computed(() => {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1.5rem 2.5rem;
-  padding: 0.5rem;
+  padding: 1.5rem 1rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06) 70%, transparent);
 }
 
 .pile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .pile-label,
-.direction,
-.status {
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.3rem;
-  background: var(--surface);
+.direction {
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  background: var(--glass);
+  font-family: var(--font-display);
+  font-weight: 600;
+  box-shadow: 0 0.15rem 0 rgba(0, 0, 0, 0.15);
 }
 
 .pile-label {
@@ -345,36 +405,51 @@ const statusText = computed(() => {
   background: none;
   color: inherit;
   cursor: pointer;
-  transition: transform 0.14s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .draw-pile:disabled {
   cursor: not-allowed;
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .draw-pile:not(:disabled):hover {
-  transform: translateY(-0.25rem);
+  transform: translateY(-0.35rem) rotate(-3deg);
 }
 
 .draw-pile.prompt {
-  outline: 0.2rem solid var(--text);
-  outline-offset: 0.15rem;
+  animation: wiggle 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 0.6rem var(--glow));
+}
+
+@keyframes wiggle {
+  0%, 60%, 100% {
+    transform: rotate(0);
+  }
+  70% {
+    transform: rotate(-5deg) scale(1.04);
+  }
+  80% {
+    transform: rotate(5deg) scale(1.04);
+  }
+  90% {
+    transform: rotate(-3deg);
+  }
 }
 
 .draw-pile:focus-visible {
-  outline: 0.2rem solid var(--text);
-  outline-offset: 0.15rem;
+  outline: 0.2rem solid var(--glow);
+  outline-offset: 0.2rem;
 }
 
 .discard {
-  animation: land 0.2s ease-out;
+  animation: land 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes land {
   from {
     opacity: 0;
-    transform: scale(1.25) rotate(-8deg);
+    transform: translateY(-1.5rem) scale(1.3) rotate(-14deg);
   }
 }
 
@@ -386,17 +461,34 @@ const statusText = computed(() => {
 }
 
 .active-color {
+  --tint: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-width: 6rem;
-  border: 1px solid var(--text);
-  background: var(--surface);
-  padding: 0.35rem 0.8rem;
+  gap: 0.5rem;
+  min-width: 7rem;
+  padding: 0.35rem 1rem 0.35rem 0.4rem;
+  border: 0.2rem solid var(--tint);
   border-radius: 999px;
-  text-align: center;
+  background: #fff;
+  color: var(--tint);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   font-weight: 700;
+  text-transform: capitalize;
+  box-shadow: 0 0.25rem 0 var(--tint);
+  animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.red { --tint: #dc2626; }
+.yellow { --tint: #ca8a04; }
+.blue { --tint: #2563eb; }
+.green { --tint: #16a34a; }
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+  }
 }
 
 .direction {
@@ -413,27 +505,102 @@ const statusText = computed(() => {
 }
 
 .status {
+  position: relative;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background: var(--glass);
+  font-family: var(--font-display);
   font-weight: 600;
+  box-shadow: var(--chunky);
+}
+
+/* little speech-bubble tail pointing at the hand */
+.status::after {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  bottom: -0.45rem;
+  border: 0.5rem solid transparent;
+  border-bottom: 0;
+  border-top-color: var(--glass);
 }
 
 .action-buttons {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
+}
+
+.btn-uno,
+.btn-catch {
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-uno {
+  padding: 0.7rem 1.6rem;
+  background: var(--red);
+  color: var(--yellow);
+  font-size: 1.3rem;
+  -webkit-text-stroke: 0.5px #7f1d1d;
+  box-shadow: 0 0.3rem 0 #991b1b, 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.btn-uno:not(:disabled) {
+  animation: throb 1s ease-in-out infinite;
+}
+
+@keyframes throb {
+  50% {
+    transform: scale(1.08) rotate(-2deg);
+  }
+}
+
+.btn-catch {
+  background: var(--yellow);
+  color: var(--text);
+  box-shadow: 0 0.3rem 0 #a16207, 0 0.5rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+.btn-uno:not(:disabled):active,
+.btn-catch:active {
+  transform: translateY(0.2rem);
+  box-shadow: none;
 }
 
 .hand-area {
-  padding: 0.6rem 0.75rem 0.85rem;
-  border: 0.15rem solid var(--border);
-  border-radius: 0.75rem;
-  background: var(--surface);
+  padding: 0.7rem 1rem 1rem;
+  border: 0.2rem solid transparent;
+  border-radius: 1.5rem;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--chunky);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.hand-area.in-turn {
+  border-color: var(--glow);
+  box-shadow: 0 0 0 0.35rem rgba(253, 224, 71, 0.35), var(--chunky);
 }
 
 .hand-title {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
   font-size: 0.95rem;
+}
+
+.hand-count {
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  background: #fff7d6;
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 .hand {
@@ -447,13 +614,18 @@ const statusText = computed(() => {
   align-self: start;
   position: sticky;
   top: 1rem;
-  padding: 0.9rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 1.25rem;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--chunky);
 }
 
 .log h2 {
   margin-bottom: 0.5rem;
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .log ol {
@@ -465,24 +637,55 @@ const statusText = computed(() => {
 }
 
 .log li {
-  padding: 0.25rem 0;
-  border-bottom: 1px solid var(--border);
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.log li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.7rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.log li:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.log li:first-child::before {
+  background: var(--red);
 }
 
 .toast {
   position: fixed;
   z-index: 10;
-  top: 3.6rem;
+  top: 4.5rem;
   left: 50%;
   width: max-content;
   max-width: calc(100vw - 2rem);
-  padding: 0.6rem 1rem;
-  border-radius: 0.5rem;
-  transform: translateX(-50%);
-  border: 1px solid var(--text);
-  background: var(--surface);
+  padding: 0.65rem 1.2rem;
+  border: 0.2rem solid var(--yellow);
+  border-radius: 999px;
+  translate: -50% 0;
+  background: #fff;
   color: var(--text);
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
+  box-shadow: var(--chunky);
+  animation: drop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem) scale(0.8);
+  }
 }
 
 .overlay {
@@ -493,7 +696,8 @@ const statusText = computed(() => {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
 }
 
 .picker {
@@ -503,6 +707,10 @@ const statusText = computed(() => {
   gap: 1rem;
   width: 100%;
   max-width: 22rem;
+  border: 0;
+  border-radius: 1.5rem;
+  box-shadow: var(--chunky);
+  animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .picker h2 {
@@ -512,39 +720,58 @@ const statusText = computed(() => {
 .swatches {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
+  gap: 0.75rem;
   width: 100%;
 }
 
-.active-color img,
+.active-color img {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .swatch img {
-  width: 1.25rem;
-  height: 1.25rem;
-  object-fit: cover;
+  width: 2.2rem;
+  height: 2.2rem;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .swatch {
+  --tint: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  padding: 1.1rem 0.5rem;
-  border: 1px solid var(--text);
-  background: var(--surface);
-  color: var(--text);
-  border-radius: 0.6rem;
+  gap: 0.5rem;
+  padding: 0.9rem 0.5rem;
+  border: 0.2rem solid var(--tint);
+  border-radius: 1rem;
+  background: #fff;
+  color: var(--tint);
   font: inherit;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   font-weight: 700;
+  text-transform: capitalize;
   cursor: pointer;
+  box-shadow: 0 0.25rem 0 var(--tint);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .swatch:hover {
-  background: var(--selected);
+  transform: translateY(-0.2rem);
+}
+
+.swatch:hover img {
+  transform: rotate(180deg) scale(1.15);
+}
+
+.swatch:active {
+  transform: translateY(0.2rem);
+  box-shadow: none;
 }
 
 .swatch:focus-visible {
   outline: 0.2rem solid var(--text);
-  outline-offset: 0.1rem;
+  outline-offset: 0.15rem;
 }
 
 @media (max-width: 900px) {
@@ -562,6 +789,10 @@ const statusText = computed(() => {
 }
 
 @media (max-width: 640px) {
+  .topbar {
+    margin: 0.5rem 0.6rem 0;
+  }
+
   .layout {
     padding: 0.6rem;
   }
@@ -581,12 +812,11 @@ const statusText = computed(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .discard {
-    animation: none;
-  }
-
-  .draw-pile {
-    transition: none;
+  .play *,
+  .play *::before,
+  .play *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }
 </style>

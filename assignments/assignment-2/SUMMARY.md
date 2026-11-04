@@ -3,7 +3,7 @@
 ## Overview
 This document summarizes the browser-based **UNO** user interface and **Web Worker** bot architecture implemented for Assignment 2 of the **WEB3** course. The implementation covers all **Must have**, **Should have**, and **Could have** functional requirements using **Vue.js 3 (Composition API)**, **TypeScript**, and **Vite**, while preserving 100% pass rate on the Assignment 1 test suite (238 / 238 tests passing).
 
-*Current Status: In Progress — Functional code and UI components are complete; awaiting visual card and UI image files in `future assets/`.*
+*Current Status: ✅ Completed — all functional requirements, UI components and image assets are in place. Frozen under Git tag `assignment-2`.*
 
 ---
 
@@ -52,7 +52,7 @@ This document summarizes the browser-based **UNO** user interface and **Web Work
 - **`SetupScreen.vue`:** Configures player name, opponent count (1–3 Web Worker bots), and game length (*Single round* or *First to 500*).
 - **`PlayScreen.vue`:** Renders the game table, opponent seats with card counts and UNO badges, draw/discard piles, active color token, Wild color selection dialog, interactive human hand with legal-play highlights, **UNO!** / **Catch UNO!** buttons, and a live game log.
 - **`ResultScreen.vue`:** Displays between-rounds standings (`round_over`) and final match results (`game_over`) with `canvas-confetti` celebration.
-- **`UnoCard.vue` & `src/utils/assets.ts`:** Uses Vite's `import.meta.glob` to automatically discover `.png`, `.jpg`, and `.jpeg` card and UI images in `future assets/`, falling back to accessible text/CSS rendering for any image not yet added.
+- **`UnoCard.vue` & `src/utils/assets.ts`:** Uses Vite's `import.meta.glob` to automatically discover `.png`, `.jpg`, and `.jpeg` card and UI images in `assets/`, falling back to accessible text/CSS rendering for any image not yet added.
 
 ---
 
@@ -65,7 +65,7 @@ This document summarizes the browser-based **UNO** user interface and **Web Work
 3. **Adapter / Facade Pattern:**
    - `useUnoGame` acts as a reactive facade over Assignment 1's object-oriented `UnoRound` and `UnoGame` classes, translating imperative domain mutations into reactive Vue `ref` and `computed` bindings.
 4. **Graceful Degradation (Asset Fallback):**
-   - `assets.ts` and `UnoCard.vue` decouple functional gameplay from graphical assets, allowing images to be dropped into `future assets/` incrementally without code changes.
+   - `assets.ts` and `UnoCard.vue` decouple functional gameplay from graphical assets, allowing images to be dropped into `assets/` incrementally without code changes.
 
 ---
 
@@ -83,5 +83,5 @@ This document summarizes the browser-based **UNO** user interface and **Web Work
 | **Should have** | Game over screen indicating result | `ResultScreen.vue` (`game_over` state) | ✅ Functional |
 | **Could have** | Full multi-round game with score (to 500 pts) | `match` mode using `UnoGame` | ✅ Functional |
 | **Could have** | "Between rounds" screen indicating match state | `ResultScreen.vue` (`round_over` state) | ✅ Functional |
-| **Assets** | Card & UI graphic files in `future assets/` | `future assets/cards/` (55) & `ui/` (8) | 🔄 In Progress |
+| **Assets** | Card & UI graphic files in `assets/` | `assets/cards/` (55) & `ui/` (8) | ✅ Complete |
 
